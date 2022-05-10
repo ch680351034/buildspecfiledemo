@@ -1,0 +1,105 @@
+version: 0.2
+
+run-as: Linux-user-name       #If run-as is not specified, then all commands run as the root user
+
+env:
+  shell: shell-tag
+  variables:
+    key: "value"
+    key: "value"
+  parameter-store:
+    key: "value"
+    key: "value"
+  exported-variables:    #Optional mapping. Used to list environment variables you want to export. Specify the name of each variable you want to export on a separate line under exported-variables. The variable you want to export must be available in your container during the build. The variable you export can be an environment variable.
+    - variable
+    - variable
+  secrets-manager:
+    key: secret-id:json-key:version-stage:version-id
+  git-credential-helper: no | yes
+
+proxy:
+  upload-artifacts: no | yes
+  logs: no | yes
+
+batch:
+  fast-fail: false | true
+  # build-list:
+  # build-matrix:
+  # build-graph:
+        
+phases:
+  install:
+    run-as: Linux-user-name
+    on-failure: ABORT | CONTINUE          # ABORT - Abort the build.CONTINUE - Continue to the next phase.
+    runtime-versions:
+      runtime: version         # Specify a runtime using a specific version, a major version followed by .x to specify that CodeBuild uses that major version with its latest minor version, or latest to use the most recent major and minor version (for example, java: openjdk11, ruby: 2.6, nodejs: 12.x, or java: latest)
+      runtime: version
+    commands:
+      - command
+      - command
+    finally:        #The commands in a finally block are run even if a command in the commands block fails. For example, if the commands block contains three commands and the first fails, CodeBuild skips the remaining two commands and runs any commands in the finally block. The phase is successful when all commands in the commands and the finally blocks run successfully. If any command in a phase fails, the phase fails.
+      - command
+      - command
+  pre_build:
+    run-as: Linux-user-name
+    on-failure: ABORT | CONTINUE
+    commands:                      #Optional sequence. Represents the commands, if any, that CodeBuild runs before the build. For example, you might use this phase to sign in to Amazon ECR, or you might install npm dependencies.
+      - command
+      - command
+    finally:
+      - command
+      - command
+  build:
+    run-as: Linux-user-name
+    on-failure: ABORT | CONTINUE
+    commands:                      #Optional sequence. Represents the commands, if any, that CodeBuild runs during the build. For example, you might use this phase to run Mocha, RSpec, or sbt,Maven
+      - command
+      - command
+    finally:
+      - command
+      - command
+  post_build:
+    run-as: Linux-user-name
+    on-failure: ABORT | CONTINUE
+    commands:                      #Optional sequence. Represents the commands, if any, that CodeBuild runs after the build. For example, you might use Maven to package the build artifacts into a JAR or WAR file, or you might push a Docker image into Amazon ECR. Then you might send a build notification through Amazon SNS
+      - command
+      - command
+    finally:
+      - command
+      - command
+reports:
+  report-group-name-or-arn:
+    files:
+      - location
+      - location
+    base-directory: location
+    discard-paths: no | yes
+    file-format: report-format
+artifacts:
+  files:
+    - location
+    - location
+  name: artifact-name          #myname-$(date +%Y-%m-%d)  myname-$AWS_REGION $AWS_REGION-$(date +%Y-%m-%d)  builds/$CODEBUILD_BUILD_NUMBER/my-artifacts
+  discard-paths: no | yes
+  base-directory: location
+  exclude-paths: excluded paths
+  enable-symlinks: no | yes
+  s3-prefix: prefix
+  secondary-artifacts:
+    artifactIdentifier:
+      files:
+        - location
+        - location
+      name: secondary-artifact-name
+      discard-paths: no | yes
+      base-directory: location
+    artifactIdentifier:
+      files:
+        - location
+        - location
+      discard-paths: no | yes
+      base-directory: location
+cache:
+  paths:
+    - path
+    - path
