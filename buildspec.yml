@@ -75,7 +75,7 @@ reports:
     base-directory: location
     discard-paths: no | yes
     file-format: report-format
-artifacts:
+artifacts:                    #The UPLOAD_ARTIFACTS phase is always attempted, even if the BUILD phase fails.
   files:
     - location
     - location
